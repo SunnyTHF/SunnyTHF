@@ -1,0 +1,18 @@
+import copy
+myUniqueList = []
+myLeftovers = []
+def thingsAdd(NumberOrString):
+    if NumberOrString in myUniqueList:
+        print('Seems like it has already been added to your unique list, I will add it to the left overs.')
+        myLeftovers.append(NumberOrString)
+        return copy.copy(myLeftovers)
+
+    else:
+        print('This has not been added, I will add it to the unique list.')
+        myUniqueList.append(NumberOrString)
+        return copy.copy(myUniqueList)
+
+
+thingsAdd(2020)
+print('myUniqueList: ', myUniqueList)
+print('myLeftovers:', myLeftovers)
