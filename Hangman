@@ -1,0 +1,61 @@
+def get_word_single():
+    wordList = [] #The list of words is from https://github.com/dwyl/english-words/blob/master/words_alpha.txt
+    wordLoadList = open('word_list', 'r')
+    for word in wordLoadList:
+        wordList.append(word)
+    wordLoadList.close()
+    return random.choice(wordList)
+
+def single_player():
+    alphabet = 'abcdefghijklmnopqrstuvwxyz'
+    word = get_word_single()
+    letter_guessed = []
+    tries = 20
+    guessed = False
+    print('The word contains', len(word)-1, 'letters.')
+    print((len(word)-1) * '*')
+    while guessed == False and tries > 0:
+        print('You now have', str(tries), 'tries left.')
+        guess = input('Please enter your guesses, a letter or the whole word: ').lower()
+        if len(guess) == 1:
+            if guess not in alphabet:
+                print('This is not a letter, please correct your input.')
+            elif guess in letter_guessed:
+                print('You have already guessed that letter before.')
+            elif guess not in word:
+                print('Sorry, the letter you guessed is not part of the word.')
+                letter_guessed.append(guess)
+                tries -= 1
+            elif guess in word:
+                print('Good job, the letter exist in the word!')
+                letter_guessed.append(guess)
+            else:
+                print('What are you entering? This is a Hangman game, please correct your input before you try again.')
+        elif len(guess) == len(word):
+            if guess == word:
+                print('Wow, you have guessed the word, great job!!!')
+            else:
+                print('Sorry, that is not the word.')
+                tries -= 1
+        else:
+            print('The length of your guesses is not the same as the one we are looking for, please check your spelling.')
+        status = ''
+        if not guessed:
+            for letter in word:
+                if letter in letter_guessed:
+                    status += letter
+                elif guess == word:
+                    status = guess
+                else:
+                    status += '*'
+            print(status)
+        if status == word or guess == word:
+            print('Congrets, you have guessed the word!')
+            guessed = True
+        elif tries == 0:
+            print('You have just run out of tries, better luck next time.')
+            print('The answer is', word)
+            guessed = True
+    play_again()
+		
+single_player()
